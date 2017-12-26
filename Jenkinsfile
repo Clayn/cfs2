@@ -1,9 +1,10 @@
 pipeline {
     agent any
-	def maven=tool 'Maven'
+	def maven
     stages {
 		stage('Prepare') {
 			steps {
+				maven=tool 'Maven'
 				dir('ClaynFileSystem2') {
 					if (isUnix()) {
 						sh "'${maven}/bin/mvn' clean"
