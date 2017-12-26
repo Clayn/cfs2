@@ -9,4 +9,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <name>Clayn Filesystem 2</name>
+    <modules>
+        <module>ClaynFileSystem2-API</module>
+    </modules>
 </project>
