@@ -1,6 +1,7 @@
 node {
    def mvnHome
    stage('Preparation') { 
+			git branch: 'development', credentialsId: '1a70b761-a34e-4cf2-962b-7a394137ec16', url: 'https://github.com/Clayn/cfs2.git'
             mvnHome = tool 'Maven'
             dir('ClaynFilesystem2') {
                 if (isUnix()) {
