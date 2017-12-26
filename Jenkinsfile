@@ -1,15 +1,16 @@
 pipeline {
     agent any
-	def maven
+	tools { 
+        maven 'Maven'
+    }
     stages {
 		stage('Prepare') {
 			steps {
-				maven=tool 'Maven'
 				dir('ClaynFileSystem2') {
 					if (isUnix()) {
-						sh "'${maven}/bin/mvn' clean"
+						sh "mvn clean"
 					} else {
-						bat(/"${maven}\bin\mvn" clean/)
+						bat(/mvn clean/)
 					}
 				}
 			}	
@@ -18,9 +19,9 @@ pipeline {
             steps {
                 dir('ClaynFileSystem2') {
 					if (isUnix()) {
-						sh "'${maven}/bin/mvn' -DskipTests compile"
+						sh "/mvn -DskipTests compile"
 					} else {
-						bat(/"${maven}\bin\mvn" -DskipTests compile/)
+						bat(/mvn -DskipTests compile/)
 					}
 				}
             }
@@ -29,9 +30,9 @@ pipeline {
             steps {
                 dir('ClaynFileSystem2') {
 					if (isUnix()) {
-						sh "'${maven}/bin/mvn' -Dmaven.test.failure.ignore=true test"
+						sh "mvn -Dmaven.test.failure.ignore=true test"
 					} else {
-						bat(/"${maven}\bin\mvn" -Dmaven.test.failure.ignore=true test/)
+						bat(/mvn -Dmaven.test.failure.ignore=true test/)
 					}
 				}
             }
@@ -40,9 +41,11 @@ pipeline {
             steps {
                 dir('ClaynFileSystem2') {
 					if (isUnix()) {
-						sh "'${maven}/bin/mvn' -DskipTests install"
+						sh "mvn -DskipTests install"
 					} else {
-						bat(/"${maven}\bin\mvn" -DskipTests install/)
+						bat(/mvn -DskipTests install/)
+						bat(/mvn -DskipTests install/)
+						bat(/mvn -DskipTests install/)
 					}
 				}
             }
