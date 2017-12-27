@@ -11,6 +11,7 @@
     <name>Clayn Filesystem 2</name>
     <modules>
         <module>ClaynFileSystem2-API</module>
+        <module>Local-Impl</module>
     </modules>
     <dependencies>
         <dependency>
