@@ -21,15 +21,23 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.bplaced.clayn.cfs2.api;
+package net.bplaced.clayn.cfs2.api.util;
+
+import java.io.IOException;
+import net.bplaced.clayn.cfs2.api.VirtualFile;
 
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
- * @param <Parent>
  * @since 0.2.0
  */
-public interface Child<Parent>
+public abstract class FormattedFile
 {
-    public Parent getParent();
+
+    protected final VirtualFile sourceFile;
+
+    public FormattedFile(VirtualFile vFile) throws IOException
+    {
+        this.sourceFile = vFile;
+    }
 }

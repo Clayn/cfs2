@@ -29,7 +29,7 @@ import net.bplaced.clayn.cfs2.api.opt.CreateOption;
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
- * @since 0.1
+ * @since 0.2.0
  */
 public interface IOEntity
 {
@@ -37,4 +37,27 @@ public interface IOEntity
     public void create(CreateOption option, CreateOption... additonal) throws IOException;
 
     public void create() throws IOException;
+
+    public default void createIfNotExists(CreateOption option,
+            CreateOption... additonal) throws IOException
+    {
+        if (exists())
+        {
+            return;
+        }
+        create(option, additonal);
+    }
+
+    public default void createIfNotExists() throws IOException
+    {
+        if (exists())
+        {
+            return;
+        }
+        create();
+    }
+
+    public boolean exists();
+    public String getName();
+
 }

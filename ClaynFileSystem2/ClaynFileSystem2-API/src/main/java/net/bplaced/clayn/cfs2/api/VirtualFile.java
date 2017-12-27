@@ -24,12 +24,14 @@
 package net.bplaced.clayn.cfs2.api;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import net.bplaced.clayn.cfs2.api.opt.CreateOption;
 
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
- * @since 0.1
+ * @since 0.2.0
  */
 public interface VirtualFile extends Child<VirtualDirectory>, IOEntity
 {
@@ -48,4 +50,7 @@ public interface VirtualFile extends Child<VirtualDirectory>, IOEntity
         create(CreateOption.FAIL_IF_EXIST);
     }
 
+    public OutputStream openWrite() throws IOException, IllegalStateException;
+
+    public InputStream openRead() throws IOException, IllegalStateException;
 }

@@ -21,44 +21,56 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.bplaced.clayn.cfs2.api;
+package net.bplaced.clayn.cfs2.api.util;
 
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+import net.bplaced.clayn.cfs2.api.VirtualFileSystem;
 
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
  * @since 0.2.0
  */
-public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity
+public class FileSystemProvider
 {
 
-    /**
-     * Interface for some syntactic sugar for reduced code to write.
-     */
-    public static interface VDir extends VirtualDirectory
-    {
+    private static final FileSystemProvider INSTANCE = new FileSystemProvider();
+    private boolean overrideAllowed;
+    private final Map<String, Function<Map<String, Object>, VirtualFileSystem>> registeredProviders = new HashMap<>();
 
+    public static FileSystemProvider getInstance()
+    {
+        return INSTANCE;
     }
 
-    public VirtualDirectory changeDirectory(String path);
-
-    public List<VirtualDirectory> listDirectories();
-
-    public List<VirtualFile> listFiles();
-
-    public default List<String> listContent()
+    public void setOverrideAllowed(boolean overrideAllowed)
     {
-        return Stream.concat(listDirectories().stream(), listFiles().stream()).map(
-                IOEntity::getName).collect(Collectors.toList());
+        this.overrideAllowed = overrideAllowed;
     }
 
-    public default boolean isRoot()
+    public boolean isOverrideAllowed()
     {
-        return getParent() == null;
+        return overrideAllowed;
     }
 
-    public VirtualFile getFile(String name);
+    public void register(String ident,
+            Function<Map<String, Object>, VirtualFileSystem> provider)
+    {
+        if (registeredProviders.containsKey(ident))
+        {
+            if (!isOverrideAllowed())
+            {
+                throw new RuntimeException();
+            }
+        }
+        registeredProviders.put(ident, provider);
+    }
+
+    public Function<Map<String, Object>, VirtualFileSystem> getProvider(
+            String ident)
+    {
+        return registeredProviders.get(ident);
+    }
 }

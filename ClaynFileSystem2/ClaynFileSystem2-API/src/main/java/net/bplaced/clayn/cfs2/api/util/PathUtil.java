@@ -21,15 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.bplaced.clayn.cfs2.api;
+package net.bplaced.clayn.cfs2.api.util;
 
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
- * @param <Parent>
  * @since 0.2.0
  */
-public interface Child<Parent>
+public class PathUtil
 {
-    public Parent getParent();
+
+    public static String cleanPath(String path)
+    {
+        String back = path.trim();
+        back = back.replaceAll("\\/\\/+", "/");
+        return back;
+    }
 }

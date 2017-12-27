@@ -26,10 +26,10 @@ package net.bplaced.clayn.cfs2.api;
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
- * @param <Parent>
  * @since 0.2.0
  */
-public interface Child<Parent>
+public interface VirtualFileSystem
 {
-    public Parent getParent();
+
+    public VirtualDirectory getRoot();
 }

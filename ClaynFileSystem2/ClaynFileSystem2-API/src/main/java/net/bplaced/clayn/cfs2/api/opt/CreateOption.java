@@ -26,7 +26,7 @@ package net.bplaced.clayn.cfs2.api.opt;
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
- * @since 0.1
+ * @since 0.2.0
  */
 public enum CreateOption
 {
