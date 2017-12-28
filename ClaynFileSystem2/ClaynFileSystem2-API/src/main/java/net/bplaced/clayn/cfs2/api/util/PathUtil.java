@@ -37,4 +37,10 @@ public class PathUtil
         back = back.replaceAll("\\/\\/+", "/");
         return back;
     }
+
+    public static String normalizePath(String path)
+    {
+        String back = cleanPath(path);
+        return back.endsWith("/") ? back : back + '/';
+    }
 }

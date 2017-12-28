@@ -30,5 +30,5 @@ package net.bplaced.clayn.cfs2.api.opt;
  */
 public enum CreateOption
 {
-    FAIL_IF_EXIST, CREATE_PARENTS, REPLACE_IF_EXIST;
+    FAIL_IF_EXIST, CREATE_PARENTS, REPLACE_IF_EXIST, SKIP_IF_EXIST;
 }
