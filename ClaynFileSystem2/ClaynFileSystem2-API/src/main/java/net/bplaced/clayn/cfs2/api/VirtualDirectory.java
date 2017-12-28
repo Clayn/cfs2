@@ -87,4 +87,16 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity
     }
 
     public VirtualFile getFile(String name);
+
+    @Override
+    public default String getPath()
+    {
+        if (isRoot())
+        {
+            return "/";
+        } else
+        {
+            return IOEntity.super.getPath();
+        }
+    }
 }

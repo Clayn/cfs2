@@ -136,6 +136,18 @@ public interface VirtualFile extends Child<VirtualDirectory>, IOEntity
                 return self.getName();
             }
 
+            @Override
+            public String getPath()
+            {
+                return self.getPath();
+            }
+
+            @Override
+            public String getLocation()
+            {
+                return self.getLocation();
+            }
+
         };
     }
 }

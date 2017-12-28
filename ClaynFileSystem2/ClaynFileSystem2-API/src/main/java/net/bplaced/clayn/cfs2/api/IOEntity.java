@@ -103,4 +103,23 @@ public interface IOEntity
      */
     public String getName();
 
+    /**
+     * Returns the path of this entity.
+     *
+     * @return the path of the entity.
+     */
+    public default String getPath()
+    {
+        String loc = getLocation();
+        return loc + (loc.endsWith("/") ? "" : "/") + getName();
+    }
+
+    /**
+     * Returns the directory for this entity. The returned string does not
+     * include the name of the entity. For the root this is always {@code "/"}.
+     *
+     * @return the location of this entity.
+     */
+    public String getLocation();
+
 }
