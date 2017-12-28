@@ -31,5 +31,10 @@ package net.bplaced.clayn.cfs2.api;
 public interface VirtualFileSystem
 {
 
+    /**
+     * Returns the root directory for this file system.
+     *
+     * @return the root for this file system.
+     */
     public VirtualDirectory getRoot();
 }

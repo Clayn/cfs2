@@ -26,17 +26,50 @@ package net.bplaced.clayn.cfs2.api;
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
- * @param <Parent>
  * @since 0.2.0
  */
-public interface Child<Parent>
+public class FileInformation
 {
 
+    private final long size;
+    private final long createdOn;
+    private final long lastModifiedOn;
+
+    public FileInformation(long size, long createdOn, long lastModifiedOn)
+    {
+        this.size = size;
+        this.createdOn = createdOn;
+        this.lastModifiedOn = lastModifiedOn;
+    }
+
     /**
-     * Returns the parent of this child. A child may have no parent. In this
-     * case {@code null} gets returned.
+     * Returns the timestamp of the date when the file was created.
      *
-     * @return the parent of this child.
+     * @return the timestamp of the date when the file was created.
      */
-    public Parent getParent();
+    public long getCreatedOn()
+    {
+        return createdOn;
+    }
+
+    /**
+     * Returns the timestamp of the date when the file was last modified.
+     *
+     * @return the timestamp of the date when the file was last modified.
+     */
+    public long getLastModifiedOn()
+    {
+        return lastModifiedOn;
+    }
+
+    /**
+     * Returns the size of the file in bytes.
+     *
+     * @return the size of the file in bytes.
+     */
+    public long getSize()
+    {
+        return size;
+    }
+
 }

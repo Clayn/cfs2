@@ -45,16 +45,42 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity
 
     public VirtualDirectory changeDirectory(String path);
 
+    /**
+     * Returns a list of all directories in this directory. May be empty but
+     * never {@code null}.
+     *
+     * @return the non null list of the directories in this directory.
+     */
     public List<VirtualDirectory> listDirectories();
 
+    /**
+     * Returns a list of all files in this directory. May be empty but never
+     * {@code null}.
+     *
+     * @return the non null list of the files in this directory.
+     */
     public List<VirtualFile> listFiles();
 
+    /**
+     * Returns the names of all files and directories in this directory. The
+     * list will only contain the names but not if it is a file or directory.
+     * May be empty but never {@code null}.
+     *
+     * @return the non null list with the name of all files and directories in
+     * this directory.
+     */
     public default List<String> listContent()
     {
         return Stream.concat(listDirectories().stream(), listFiles().stream()).map(
                 IOEntity::getName).collect(Collectors.toList());
     }
 
+    /**
+     * Returns wether or not this directory is the root of its file system.
+     *
+     * @return {@code true} if the directory is the root, {@code false}
+     * otherwise.
+     */
     public default boolean isRoot()
     {
         return getParent() == null;

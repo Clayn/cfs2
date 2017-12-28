@@ -44,13 +44,98 @@ public interface VirtualFile extends Child<VirtualDirectory>, IOEntity
 
     }
 
+    /**
+     * Creates the file using the {@link CreateOption#FAIL_IF_EXIST} option.
+     *
+     * @throws IOException if an I/O Error occurs.
+     */
     @Override
     public default void create() throws IOException
     {
         create(CreateOption.FAIL_IF_EXIST);
     }
 
+    /**
+     * Opens the file to write into it. If the file is already opened to be read
+     * this method may fail.
+     *
+     * @return the outputstreaym to write into the file
+     * @throws IOException if an I/O Error occurs.
+     * @throws IllegalStateException if the file is already opened for reading.
+     */
     public OutputStream openWrite() throws IOException, IllegalStateException;
 
+    /**
+     * Opens the file to be read from. If the file is already opened to be
+     * written to this method may fail.
+     *
+     * @return an inputstream to read from the file
+     * @throws IOException if an I/O Error occurs.
+     * @throws IllegalStateException if the file is already opened for writing.
+     */
     public InputStream openRead() throws IOException, IllegalStateException;
+
+    /**
+     * Returns the files current information. The returned information may not
+     * be updated if the file is changed.
+     *
+     * @return the files current information.
+     */
+    public FileInformation getInformation();
+
+    /**
+     * Creates a read only variant of this file. A read only file can't be
+     * created or written to.
+     *
+     * @return a read only variant of this file.
+     */
+    public default VirtualFile readOnly()
+    {
+        VirtualFile self = this;
+        return new VirtualFile()
+        {
+            @Override
+            public OutputStream openWrite() throws IOException, IllegalStateException
+            {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public InputStream openRead() throws IOException, IllegalStateException
+            {
+                return self.openRead();
+            }
+
+            @Override
+            public FileInformation getInformation()
+            {
+                return self.getInformation();
+            }
+
+            @Override
+            public VirtualDirectory getParent()
+            {
+                return self.getParent();
+            }
+
+            @Override
+            public void create(CreateOption option, CreateOption... additonal) throws IOException
+            {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public boolean exists()
+            {
+                return self.exists();
+            }
+
+            @Override
+            public String getName()
+            {
+                return self.getName();
+            }
+
+        };
+    }
 }
