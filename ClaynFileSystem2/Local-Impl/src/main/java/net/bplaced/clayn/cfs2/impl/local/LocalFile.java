@@ -29,6 +29,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
+import java.nio.file.attribute.BasicFileAttributes;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import net.bplaced.clayn.cfs2.api.FileInformation;
 import net.bplaced.clayn.cfs2.api.VirtualDirectory;
@@ -124,7 +129,21 @@ public class LocalFile implements VirtualFile
     @Override
     public FileInformation getInformation()
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (!exists())
+        {
+            return new FileInformation(-1, -1, -1);
+        }
+        try
+        {
+            BasicFileAttributes attr = Files.readAttributes(localFile.toPath(),
+                    BasicFileAttributes.class);
+            return new FileInformation(attr.size(),
+                    attr.creationTime().toMillis(),
+                    attr.lastModifiedTime().toMillis());
+        } catch (IOException ex)
+        {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
@@ -136,7 +155,42 @@ public class LocalFile implements VirtualFile
     @Override
     public void create(CreateOption option, CreateOption... additonal) throws IOException
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Set<CreateOption> options = new HashSet<>(
+                1 + (additonal == null ? 0 : additonal.length));
+        if(option!=null) {
+            options.add(option);
+        }
+        if(additonal!=null) {
+            options.addAll(Arrays.asList(additonal));
+        }
+        if(localFile.exists()) {
+            if(options.contains(CreateOption.FAIL_IF_EXIST)) {
+                throw new IOException("File '"+getPath()+"' already exists");
+            }
+            if(options.contains(CreateOption.SKIP_IF_EXIST))
+            {
+                return;
+            }
+            if(options.contains(CreateOption.REPLACE_IF_EXIST)) {
+                if(!localFile.delete()) {
+                    throw new IOException("Failed to delete '"+getPath()+"'");
+                }
+                if(!localFile.createNewFile()) {
+                    throw new IOException("Failed to recreate '"+getPath()+"'");
+                }
+            }
+        }
+        else {
+            if(!parent.exists()) {
+                if(!options.contains(CreateOption.CREATE_PARENTS)) {
+                    throw new IOException("Parent file '"+parent.getPath()+"' does not exist");
+                }
+                parent.createIfNotExists(CreateOption.CREATE_PARENTS,CreateOption.SKIP_IF_EXIST);
+            }
+            if(!localFile.createNewFile()) {
+                throw new IOException("Failed to create '"+getPath()+"'");
+            }
+        }
     }
 
     @Override
