@@ -52,10 +52,50 @@ public class LocalDirectory implements VirtualDirectory
         this.localFile = localFile;
     }
 
+    private VirtualDirectory findRoot()
+    {
+        if (isRoot())
+        {
+            return this;
+        }
+        return parent.findRoot();
+    }
+
     @Override
     public VirtualDirectory changeDirectory(String path)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        Objects.requireNonNull(path);
+        if(!path.contains("/")) {
+            return new LocalDirectory(this, new File(localFile, path));
+        }
+        List<String> parts = Arrays.stream(PathUtil.cleanPath(path).split("\\/"))
+                .filter((str) -> !str.trim().isEmpty()).collect(
+                Collectors.toList());
+        VirtualDirectory current = path.startsWith("/") ? findRoot() : this;
+        for (String part : parts)
+        {
+            if (null == part)
+            {
+                current = current.changeDirectory(part);
+            } else
+            {
+                switch (part)
+                {
+                    case ".":
+                        continue;
+                    case "..":
+                        if (!current.isRoot())
+                        {
+                            current = current.getParent();
+                        }
+                        break;
+                    default:
+                        current = current.changeDirectory(part);
+                        break;
+                }
+            }
+        }
+        return current;
     }
 
     @Override
