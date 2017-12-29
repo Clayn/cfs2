@@ -23,6 +23,8 @@
  */
 package net.bplaced.clayn.cfs2.api.util;
 
+import java.util.Objects;
+
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
@@ -33,6 +35,7 @@ public class PathUtil
 
     public static String cleanPath(String path)
     {
+        Objects.requireNonNull(path);
         String back = path.trim();
         back = back.replaceAll("\\/\\/+", "/");
         return back;
@@ -40,6 +43,7 @@ public class PathUtil
 
     public static String normalizePath(String path)
     {
+        Objects.requireNonNull(path);
         String back = cleanPath(path);
         return back.endsWith("/") ? back : back + '/';
     }
