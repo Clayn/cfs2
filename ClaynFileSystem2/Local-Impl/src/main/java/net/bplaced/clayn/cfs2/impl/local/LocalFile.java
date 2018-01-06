@@ -211,4 +211,11 @@ public class LocalFile implements VirtualFile
         return parent.getPath();
     }
 
+    @Override
+    public void copy(VirtualFile dest) throws IOException
+    {
+        dest.createIfNotExists(CreateOption.SKIP_IF_EXIST, CreateOption.CREATE_PARENTS,CreateOption.REPLACE_IF_EXIST);
+        
+    }
+
 }

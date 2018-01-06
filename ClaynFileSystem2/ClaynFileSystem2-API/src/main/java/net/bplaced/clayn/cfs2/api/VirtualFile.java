@@ -27,13 +27,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import net.bplaced.clayn.cfs2.api.opt.CreateOption;
+import net.bplaced.clayn.cfs2.api.util.Copyable;
 
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
  * @since 0.2.0
  */
-public interface VirtualFile extends Child<VirtualDirectory>, IOEntity
+public interface VirtualFile extends Child<VirtualDirectory>, IOEntity, Copyable<VirtualFile>
 {
 
     /**
@@ -146,6 +147,12 @@ public interface VirtualFile extends Child<VirtualDirectory>, IOEntity
             public String getLocation()
             {
                 return self.getLocation();
+            }
+
+            @Override
+            public void copy(VirtualFile dest) throws IOException
+            {
+                self.copy(dest);
             }
 
         };

@@ -13,6 +13,7 @@
         <module>ClaynFileSystem2-API</module>
         <module>Local-Impl</module>
         <module>ClaynFileSystemTests</module>
+        <module>ManualTest</module>
     </modules>
     <dependencies>
         <dependency>

@@ -6,19 +6,23 @@
         <artifactId>cfs2</artifactId>
         <version>0.2.0-SNAPSHOT</version>
     </parent>
-    <artifactId>cfs2-test</artifactId>
+    <artifactId>cfs2-man</artifactId>
     <packaging>jar</packaging>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-    <name>Clayn Filesystem 2 Tests</name>
+    <name>Clayn Filesystem 2 Manual</name>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>cfs2-api</artifactId>
+            <artifactId>cf2-impl</artifactId>
             <version>${project.version}</version>
-            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.1.8</version>
         </dependency>
     </dependencies>
 </project>

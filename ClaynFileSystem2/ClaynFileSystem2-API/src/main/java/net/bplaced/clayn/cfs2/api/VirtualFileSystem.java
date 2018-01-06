@@ -23,12 +23,15 @@
  */
 package net.bplaced.clayn.cfs2.api;
 
+import java.io.IOException;
+import net.bplaced.clayn.cfs2.api.util.Copyable;
+
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
  * @since 0.2.0
  */
-public interface VirtualFileSystem
+public interface VirtualFileSystem extends Copyable<VirtualFileSystem>
 {
 
     /**
@@ -37,4 +40,12 @@ public interface VirtualFileSystem
      * @return the root for this file system.
      */
     public VirtualDirectory getRoot();
+
+    @Override
+    public default void copy(VirtualFileSystem dest) throws IOException
+    {
+        getRoot().copy(dest.getRoot());
+    }
+    
+    
 }

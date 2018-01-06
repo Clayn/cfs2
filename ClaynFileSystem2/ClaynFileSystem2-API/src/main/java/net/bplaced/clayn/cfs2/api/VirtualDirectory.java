@@ -23,16 +23,19 @@
  */
 package net.bplaced.clayn.cfs2.api;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import net.bplaced.clayn.cfs2.api.opt.CreateOption;
+import net.bplaced.clayn.cfs2.api.util.Copyable;
 
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
  * @since 0.2.0
  */
-public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity
+public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity, Copyable<VirtualDirectory>
 {
 
     /**
@@ -41,6 +44,28 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity
     public static interface VDir extends VirtualDirectory
     {
 
+    }
+
+    /**
+     * Creates the directory while skipping the creation if the directory
+     * already exists.
+     *
+     * @throws IOException if an I/O Error occurs.
+     */
+    public default void mkDir() throws IOException
+    {
+        create(CreateOption.SKIP_IF_EXIST);
+    }
+
+    /**
+     * Creates the directory while skipping the creation if the directory
+     * already exists. All parent directories will be created as well.
+     *
+     * @throws IOException if an I/O Error occurs.
+     */
+    public default void mkDirs() throws IOException
+    {
+        create(CreateOption.SKIP_IF_EXIST, CreateOption.CREATE_PARENTS);
     }
 
     public VirtualDirectory changeDirectory(String path);
@@ -99,4 +124,14 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity
             return IOEntity.super.getPath();
         }
     }
+
+    @Override
+    public default void copy(VirtualDirectory dest) throws IOException
+    {
+        for(VirtualDirectory dir:listDirectories()) {
+            dir.copy(dest.changeDirectory(dir.getName()));
+        }
+    }
+    
+    
 }

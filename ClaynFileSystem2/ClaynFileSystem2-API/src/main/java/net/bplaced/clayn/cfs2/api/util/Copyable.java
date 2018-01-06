@@ -21,54 +21,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.bplaced.clayn.cfs2.impl.local;
+package net.bplaced.clayn.cfs2.api.util;
 
-import java.io.File;
-import java.util.Map;
-import java.util.function.Function;
-import net.bplaced.clayn.cfs2.api.VirtualDirectory;
-import net.bplaced.clayn.cfs2.api.VirtualFileSystem;
-import net.bplaced.clayn.cfs2.api.util.FileSystemProvider;
+import java.io.IOException;
 
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
- * @since 0.1
+ * @param <T>
+ * @since 0.2.0
  */
-public class LocalFileSystem implements VirtualFileSystem
+public interface Copyable<T>
 {
-
-    private final File rootFile;
-
-    public LocalFileSystem(File rootFile)
-    {
-        this.rootFile = rootFile;
-    }
-
-    public LocalFileSystem()
-    {
-        this(new File(System.getProperty("user.dir")));
-    }
-    
-    
-
-    @Override
-    public VirtualDirectory getRoot()
-    {
-        return new LocalDirectory(null, rootFile);
-    }
-
-    public static void installProvider()
-    {
-        FileSystemProvider.getInstance().register("cfs2-local",
-                new Function<Map<String, Object>, VirtualFileSystem>()
-        {
-            @Override
-            public VirtualFileSystem apply(Map<String, Object> t)
-            {
-                return new LocalFileSystem((File) t.get("root"));
-            }
-        });
-    }
-
+    public void copy(T dest) throws IOException;
 }
