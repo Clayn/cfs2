@@ -29,7 +29,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.WeakHashMap;
 import java.util.stream.Collectors;
 import net.bplaced.clayn.cfs2.api.VirtualDirectory;
 import net.bplaced.clayn.cfs2.api.VirtualFile;
@@ -44,6 +46,8 @@ import net.bplaced.clayn.cfs2.api.util.PathUtil;
 public class LocalDirectory implements VirtualDirectory
 {
 
+    private final Map<String,VirtualFile> cachedFiles=new WeakHashMap<>();
+    private final Map<String,VirtualDirectory> cachedDirectories=new WeakHashMap<>();
     private final LocalDirectory parent;
     private final File localFile;
 
@@ -68,7 +72,12 @@ public class LocalDirectory implements VirtualDirectory
         Objects.requireNonNull(path);
         if (!path.contains("/"))
         {
-            return new LocalDirectory(this, new File(localFile, path));
+            VirtualDirectory vd=cachedDirectories.get(path);
+            if(vd!=null) {
+                return vd;
+            }
+            cachedDirectories.put(path, new LocalDirectory(this, new File(localFile, path)));
+            return cachedDirectories.get(path);
         }
         List<String> parts = Arrays.stream(PathUtil.cleanPath(path).split("\\/"))
                 .filter((str) -> !str.trim().isEmpty()).collect(
@@ -155,7 +164,11 @@ public class LocalDirectory implements VirtualDirectory
             return dir.getFile(fileName);
         } else
         {
-            return new LocalFile(this, new File(localFile, name));
+            VirtualFile vf=cachedFiles.get(name);
+            if(vf==null) {
+                cachedFiles.put(name, new LocalFile(this, new File(localFile, name)));
+            }
+            return cachedFiles.get(name);
         }
     }
 
