@@ -16,9 +16,9 @@ node {
         
 		stage('Build') {
             if (isUnix()) {
-                sh "'${mvnHome}/bin/mvn' -DskipTests compile"
+                sh "'${mvnHome}/bin/mvn' -DskipTests install"
             } else {
-                bat(/"${mvnHome}\bin\mvn" -DskipTests compile/)
+                bat(/"${mvnHome}\bin\mvn" -DskipTests install/)
             }
         }
         stage('Test') {
@@ -41,11 +41,6 @@ node {
             //jacoco()
         }
         stage('Deployment') {
-            if (isUnix()) {
-                sh "'${mvnHome}/bin/mvn' -DskipTests install"
-            } else {
-                bat(/"${mvnHome}\bin\mvn" -DskipTests install/)
-            }
         }
    }
 }
