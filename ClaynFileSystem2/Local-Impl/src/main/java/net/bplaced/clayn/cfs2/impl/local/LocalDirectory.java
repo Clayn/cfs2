@@ -25,6 +25,7 @@ package net.bplaced.clayn.cfs2.impl.local;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -65,7 +66,8 @@ public class LocalDirectory implements VirtualDirectory
     public VirtualDirectory changeDirectory(String path)
     {
         Objects.requireNonNull(path);
-        if(!path.contains("/")) {
+        if (!path.contains("/"))
+        {
             return new LocalDirectory(this, new File(localFile, path));
         }
         List<String> parts = Arrays.stream(PathUtil.cleanPath(path).split("\\/"))
@@ -115,7 +117,18 @@ public class LocalDirectory implements VirtualDirectory
     @Override
     public List<VirtualFile> listFiles()
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (!exists())
+        {
+            return Collections.emptyList();
+        }
+        File[] files = localFile.listFiles();
+        if (files == null || files.length == 0)
+        {
+            return Collections.emptyList();
+        }
+        VirtualDirectory dir = this;
+        return Arrays.stream(files).filter(File::exists).filter(File::isFile)
+                .map((f) -> new LocalFile(dir, f)).collect(Collectors.toList());
     }
 
     @Override
@@ -132,7 +145,18 @@ public class LocalDirectory implements VirtualDirectory
     @Override
     public VirtualFile getFile(String name)
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int index = name.lastIndexOf("/");
+        boolean path = index != -1;
+        if (path)
+        {
+            String dirPath = name.substring(0, index);
+            String fileName = name.substring(index + 1);
+            VirtualDirectory dir = changeDirectory(dirPath);
+            return dir.getFile(fileName);
+        } else
+        {
+            return new LocalFile(this, new File(localFile, name));
+        }
     }
 
     @Override
@@ -144,7 +168,35 @@ public class LocalDirectory implements VirtualDirectory
     @Override
     public void create(CreateOption option, CreateOption... additonal) throws IOException
     {
-        throw new UnsupportedOperationException("Not supported yet.");
+        List<CreateOption> options = new ArrayList<>(
+                1 + (additonal == null ? 0 : additonal.length));
+        options.add(option);
+        if (additonal != null && additonal.length > 0)
+        {
+            options.addAll(Arrays.asList(additonal));
+        }
+        if (exists())
+        {
+            if (options.contains(CreateOption.FAIL_IF_EXIST))
+            {
+                throw new IOException();
+            }
+        } else
+        {
+            if (options.contains(CreateOption.CREATE_PARENTS))
+            {
+                if (!localFile.mkdirs())
+                {
+                    throw new IOException();
+                }
+            } else
+            {
+                if (!localFile.mkdir())
+                {
+                    throw new IOException();
+                }
+            }
+        }
     }
 
     @Override
