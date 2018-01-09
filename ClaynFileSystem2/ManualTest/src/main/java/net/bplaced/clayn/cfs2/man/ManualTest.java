@@ -39,6 +39,7 @@ public class ManualTest
     private static final Logger log=LoggerFactory.getLogger(ManualTest.class);
     /**
      * @param args the command line arguments
+     * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException
     {
@@ -49,6 +50,11 @@ public class ManualTest
         VirtualDirectory dir=fs.getRoot();
         log.debug("Creating the root");
         dir.mkDirs();
+        VirtualDirectory dir2=dir.changeDirectory("TestDir");
+        log.debug("{} exists: {}",dir2.getPath(),dir2.exists());
+        dir2.mkDir();
+        log.debug("{} exists: {}",dir2.getPath(),dir2.exists());
+        log.debug("Listing files in the root: {}",dir.listContent());
     }
     
 }
