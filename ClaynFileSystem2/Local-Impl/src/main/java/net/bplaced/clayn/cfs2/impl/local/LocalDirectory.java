@@ -25,7 +25,11 @@ package net.bplaced.clayn.cfs2.impl.local;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
+import java.nio.file.StandardWatchEventKinds;
+import java.nio.file.WatchKey;
+import java.nio.file.WatchService;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -34,6 +38,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import net.bplaced.clayn.cfs2.api.VirtualDirectory;
 import net.bplaced.clayn.cfs2.api.VirtualFile;
@@ -57,19 +63,45 @@ public class LocalDirectory implements VirtualDirectory
     private Consumer<IOEvent<VirtualFile>> onFileCreated;
     private Consumer<IOEvent<VirtualFile>> onFileModified;
     private Consumer<IOEvent<VirtualFile>> onFileDeleted;
+    private WatchService watch;
 
     private void activateWatchService()
     {
-        if (!exists())
+        try
         {
-            return;
+            if (!exists())
+            {
+                return;
+            }
+            Path dir = localFile.toPath();
+            watch = FileSystems.getFileSystem(dir.toUri()).newWatchService();
+            WatchKey key = dir.register(watch,
+                    StandardWatchEventKinds.ENTRY_CREATE,
+                    StandardWatchEventKinds.ENTRY_DELETE,
+                    StandardWatchEventKinds.ENTRY_MODIFY);
+            
+        } catch (IOException ex)
+        {
+            Logger.getLogger(LocalDirectory.class.getName()).log(Level.SEVERE,
+                    null, ex);
         }
-        Path dir=localFile.toPath();
     }
 
     private void deactivateWatchService()
     {
-
+        if (watch != null)
+        {
+            try
+            {
+                watch.close();
+            } catch (IOException ex)
+            {
+                Logger.getLogger(LocalDirectory.class.getName()).log(
+                        Level.SEVERE,
+                        null, ex);
+            }
+            watch = null;
+        }
     }
 
     public LocalDirectory(LocalDirectory parent, File localFile)
@@ -267,7 +299,8 @@ public class LocalDirectory implements VirtualDirectory
 
     private void checkWatchServiceStatus()
     {
-        if(ObjectChecker.allNull(onFileCreated,onFileDeleted,onFileModified)) {
+        if (ObjectChecker.allNull(onFileCreated, onFileDeleted, onFileModified))
+        {
             deactivateWatchService();
         }
     }
