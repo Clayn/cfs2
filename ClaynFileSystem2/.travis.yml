@@ -1,0 +1,3 @@
+before_install: cd ClaynFileSystem2
+
+language: java
