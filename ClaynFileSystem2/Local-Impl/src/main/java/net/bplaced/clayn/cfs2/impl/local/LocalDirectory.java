@@ -79,7 +79,7 @@ public class LocalDirectory implements VirtualDirectory
                     StandardWatchEventKinds.ENTRY_CREATE,
                     StandardWatchEventKinds.ENTRY_DELETE,
                     StandardWatchEventKinds.ENTRY_MODIFY);
-            
+
         } catch (IOException ex)
         {
             Logger.getLogger(LocalDirectory.class.getName()).log(Level.SEVERE,
@@ -302,8 +302,8 @@ public class LocalDirectory implements VirtualDirectory
         if (ObjectChecker.allNull(onFileCreated, onFileDeleted, onFileModified))
         {
             deactivateWatchService();
-        }
-        else {
+        } else
+        {
             activateWatchService();
         }
     }
@@ -327,6 +327,37 @@ public class LocalDirectory implements VirtualDirectory
     {
         this.onFileModified = onFileModified;
         checkWatchServiceStatus();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 3;
+        hash = 61 * hash + Objects.hashCode(this.localFile);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+        {
+            return true;
+        }
+        if (obj == null)
+        {
+            return false;
+        }
+        if (getClass() != obj.getClass())
+        {
+            return false;
+        }
+        final LocalDirectory other = (LocalDirectory) obj;
+        if (!Objects.equals(this.localFile, other.localFile))
+        {
+            return false;
+        }
+        return true;
     }
 
 }
