@@ -24,6 +24,9 @@
 package net.bplaced.clayn.cfs2.test;
 
 import net.bplaced.clayn.cfs2.api.VirtualFileSystem;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
@@ -34,5 +37,40 @@ public abstract class BaseFileSystemTest
 {
 
     protected VirtualFileSystem fileSystem;
+    protected FileSystemTestConfigurator configurator;
+
+    @Before
+    public final void internalBefore() throws Exception
+    {
+        if (configurator == null)
+        {
+            setUpConfigurator();
+            Assert.assertNotNull("FileSystemConfigurator not set", configurator);
+        }
+        fileSystem = configurator.getFileSystem();
+        setUp();
+        verifyFileSystem();
+    }
+
+    private void verifyFileSystem()
+    {
+        Assert.assertNotNull("Filesystem must be set", fileSystem);
+    }
+
+    public void setUp()
+    {
+
+    }
+
+    public abstract void setUpConfigurator();
+
+    @Test
+    public void testDifferentTestFileSystems() throws Exception
+    {
+        Assert.assertNotNull(fileSystem);
+        VirtualFileSystem local = configurator.getFileSystem();
+        Assert.assertNotNull(local);
+        Assert.assertNotSame(fileSystem, local);
+    }
 
 }
