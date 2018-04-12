@@ -1,1 +1,4 @@
+script:
+    - cd ClaynFileSystem2
+
 language: java
