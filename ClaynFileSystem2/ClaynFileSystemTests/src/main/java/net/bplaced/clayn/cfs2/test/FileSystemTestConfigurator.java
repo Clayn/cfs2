@@ -33,5 +33,5 @@ import net.bplaced.clayn.cfs2.api.VirtualFileSystem;
 public interface FileSystemTestConfigurator
 {
 
-    public VirtualFileSystem getFileSystem();
+    public VirtualFileSystem getFileSystem() throws Exception;
 }
