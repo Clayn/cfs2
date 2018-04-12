@@ -303,6 +303,9 @@ public class LocalDirectory implements VirtualDirectory
         {
             deactivateWatchService();
         }
+        else {
+            activateWatchService();
+        }
     }
 
     @Override
