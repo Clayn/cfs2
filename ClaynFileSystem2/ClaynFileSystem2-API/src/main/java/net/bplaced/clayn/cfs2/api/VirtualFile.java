@@ -28,13 +28,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import net.bplaced.clayn.cfs2.api.opt.CreateOption;
 import net.bplaced.clayn.cfs2.api.util.Copyable;
+import net.bplaced.clayn.cfs2.api.util.IOWrapper;
 
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
  * @since 0.2.0
  */
-public interface VirtualFile extends Child<VirtualDirectory>, IOEntity, Copyable<VirtualFile>
+public interface VirtualFile extends Child<VirtualDirectory>, IOEntity, Copyable<VirtualFile>, IOWrapper
 {
 
     /**
@@ -157,4 +158,17 @@ public interface VirtualFile extends Child<VirtualDirectory>, IOEntity, Copyable
 
         };
     }
+
+    @Override
+    public default InputStream getInputStream() throws IOException
+    {
+        return openRead();
+    }
+
+    @Override
+    public default OutputStream getOutputstream() throws IOException
+    {
+        return openWrite();
+    }
+ 
 }

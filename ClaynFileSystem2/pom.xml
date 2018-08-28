@@ -14,13 +14,43 @@
             <url>http://192.168.1.63:8081/maven-clayn/</url>
         </repository>
     </repositories>
-    <name>Clayn Filesystem 2</name>
+    <name>Clayn Filesystem 2</name>    
+    
     <modules>
         <module>ClaynFileSystem2-API</module>
         <module>Local-Impl</module>
         <module>ClaynFileSystemTests</module>
         <module>ManualTest</module>
     </modules>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.8.2</version>
+            </plugin> 
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.9</version>
+                <executions>
+                    <execution>
+                        <id>jacoco-initialize</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco-site</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
