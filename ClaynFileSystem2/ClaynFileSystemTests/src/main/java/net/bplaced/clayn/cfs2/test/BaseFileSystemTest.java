@@ -48,8 +48,8 @@ public abstract class BaseFileSystemTest
             Assert.assertNotNull("FileSystemConfigurator not set", configurator);
         }
         fileSystem = configurator.getFileSystem();
-        setUp();
         verifyFileSystem();
+        setUp();
     }
 
     private void verifyFileSystem()

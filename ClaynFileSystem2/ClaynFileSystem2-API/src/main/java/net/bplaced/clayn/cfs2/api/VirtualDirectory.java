@@ -76,7 +76,7 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity, Cop
      * Returns a list of all directories in this directory. May be empty but
      * never {@code null}.
      *
-     * @return the non null list of the directories in this directory.
+     * @return a non null list of the directories in this directory.
      */
     public List<VirtualDirectory> listDirectories();
 
@@ -84,7 +84,7 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity, Cop
      * Returns a list of all files in this directory. May be empty but never
      * {@code null}.
      *
-     * @return the non null list of the files in this directory.
+     * @return a non null list of the files in this directory.
      */
     public List<VirtualFile> listFiles();
 
@@ -93,7 +93,7 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity, Cop
      * list will only contain the names but not if it is a file or directory.
      * May be empty but never {@code null}.
      *
-     * @return the non null list with the name of all files and directories in
+     * @return a non null list with the name of all files and directories in
      * this directory.
      */
     public default List<String> listContent()

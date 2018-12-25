@@ -30,8 +30,13 @@ import java.util.Objects;
  * @author Clayn <clayn_osmato@gmx.de>
  * @since 0.2.0
  */
-public class PathUtil
+public final class PathUtil
 {
+
+    private PathUtil() throws IllegalAccessException
+    {
+        throw new IllegalAccessException();
+    }
 
     public static String cleanPath(String path)
     {

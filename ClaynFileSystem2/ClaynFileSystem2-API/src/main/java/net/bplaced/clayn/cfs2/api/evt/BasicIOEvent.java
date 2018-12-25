@@ -33,7 +33,7 @@ import net.bplaced.clayn.cfs2.api.VirtualDirectory;
  * @param <E>
  * @since 0.1
  */
-public class BasicIOEvent<E extends IOEntity & Child<VirtualDirectory>> implements IOEvent<E>
+public final class BasicIOEvent<E extends IOEntity & Child<VirtualDirectory>> implements IOEvent<E>
 {
 
     private final E target;
