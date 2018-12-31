@@ -23,10 +23,6 @@
  */
 package net.bplaced.clayn.cfs2.man;
 
-import java.io.IOException;
-import net.bplaced.clayn.cfs2.api.VirtualDirectory;
-import net.bplaced.clayn.cfs2.api.VirtualFileSystem;
-import net.bplaced.clayn.cfs2.impl.local.LocalFileSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,25 +32,16 @@ import org.slf4j.LoggerFactory;
  */
 public class ManualTest
 {
-    private static final Logger log=LoggerFactory.getLogger(ManualTest.class);
+
+    private static final Logger log = LoggerFactory.getLogger(ManualTest.class);
+
     /**
      * @param args the command line arguments
      * @throws java.io.IOException
      */
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws Exception
     {
-        log.debug("Entering manual test");
-        log.debug("Creating filesystem");
-        VirtualFileSystem fs=new LocalFileSystem();
-        log.debug("Getting the root directory: "+fs.getRoot().getPath());
-        VirtualDirectory dir=fs.getRoot();
-        log.debug("Creating the root");
-        dir.mkDirs();
-        VirtualDirectory dir2=dir.changeDirectory("TestDir");
-        log.debug("{} exists: {}",dir2.getPath(),dir2.exists());
-        dir2.mkDir();
-        log.debug("{} exists: {}",dir2.getPath(),dir2.exists());
-        log.debug("Listing files in the root: {}",dir.listContent());
+        Sample.WATCH_SERVICE.execute();
     }
-    
+
 }

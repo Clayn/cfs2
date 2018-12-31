@@ -76,6 +76,7 @@ public class SimpleWatchService extends VirtualWatchService
         active = false;
         if (watchThread != null)
         {
+            LOG.debug("Interrupting the watch thread");
             watchThread.interrupt();
             watchThread = null;
         }
@@ -88,8 +89,9 @@ public class SimpleWatchService extends VirtualWatchService
         {
             return;
         }
-        Path dir = watchedDirectory.getFile().toPath();
-        WatchService service = FileSystems.getFileSystem(dir.toUri()).newWatchService();
+
+        Path dir = watchedDirectory.getFile().getAbsoluteFile().toPath();
+        WatchService service = FileSystems.getDefault().newWatchService();
         WatchKey key = dir.register(service,
                 StandardWatchEventKinds.ENTRY_CREATE,
                 StandardWatchEventKinds.ENTRY_DELETE,
@@ -123,7 +125,13 @@ public class SimpleWatchService extends VirtualWatchService
                             }
                             processFile(fileName, type);
                         }
+                        boolean valid = key.reset();
+                        if (!valid)
+                        {
+                            break;
+                        }
                     } while (isActive());
+                    LOG.debug("Stopping the watch thread");
                 } catch (InterruptedException ex)
                 {
                     if (isActive())
@@ -139,6 +147,7 @@ public class SimpleWatchService extends VirtualWatchService
             }
         }
         );
+        t.setName("Directory watcher thread - " + watchedDirectory.getPath());
         t.setDaemon(
                 true);
         t.start();
