@@ -25,10 +25,8 @@ package net.bplaced.clayn.cfs2.api;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import net.bplaced.clayn.cfs2.api.evt.IOEvent;
 import net.bplaced.clayn.cfs2.api.opt.CreateOption;
 import net.bplaced.clayn.cfs2.api.util.Copyable;
 
@@ -136,25 +134,16 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity, Cop
         }
     }
 
-    public default void setOnFileCreated(Consumer<IOEvent<VirtualFile>> handler)
-    {
+    public VirtualWatchService enableWatchService() throws IOException;
 
-    }
+    /**
+     * Disables the watchservice for this directory. If it was not enabled this
+     * method does nothing. When disabeling the watchservice no further changes
+     * will be send to the listeners. However pending changes may be processed
+     * (no guarantee though).
+     *
+     * @throws IOException if an I/O exception occurs
+     */
+    public void disableWatchService() throws IOException;
 
-    public default void setOnFileModified(Consumer<IOEvent<VirtualFile>> handler)
-    {
-
-    }
-
-    public default void setOnFileDeleted(Consumer<IOEvent<VirtualFile>> handler)
-    {
-
-    }
-
-    public default void removeListeners()
-    {
-        setOnFileCreated(null);
-        setOnFileDeleted(null);
-        setOnFileModified(null);
-    }
 }
