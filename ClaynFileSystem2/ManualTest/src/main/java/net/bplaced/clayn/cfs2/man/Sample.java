@@ -21,58 +21,30 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package net.bplaced.clayn.cfs2.api.evt;
+package net.bplaced.clayn.cfs2.man;
 
-import net.bplaced.clayn.cfs2.api.Child;
-import net.bplaced.clayn.cfs2.api.IOEntity;
-import net.bplaced.clayn.cfs2.api.VirtualDirectory;
+import net.bplaced.clayn.cfs2.man.samples.WatchServiceSample;
 
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
- * @param <E>
  * @since 0.1
  */
-public final class BasicIOEvent<E extends IOEntity & Child<VirtualDirectory>> implements IOEvent<E>
+public enum Sample
 {
 
-    private final E target;
-    private final IOEventType type;
-
-    public BasicIOEvent(E target, IOEventType type)
+    WATCH_SERVICE
     {
-        this.target = target;
-        this.type = type;
-    }
+        @Override
+        public void execute() throws Exception
+        {
+            new WatchServiceSample().executeSample();
+        }
 
-    @Override
-    public E getTarget()
+    };
+
+    public void execute() throws Exception
     {
-        return target;
-    }
 
-    @Override
-    public VirtualDirectory getSource()
-    {
-        return target.getParent();
     }
-
-    @Override
-    public String getPath()
-    {
-        return target.getPath();
-    }
-
-    @Override
-    public String getName()
-    {
-        return target.getName();
-    }
-
-    @Override
-    public IOEventType getType()
-    {
-        return type;
-    }
-
 }

@@ -35,12 +35,5 @@ import java.io.IOException;
  */
 public interface Copyable<T>
 {
-
-    /**
-     * Copies this object to the given destination.
-     *
-     * @param dest the destination for the copy
-     * @throws IOException if an I/O Exception occures while copying
-     */
     public void copy(T dest) throws IOException;
 }

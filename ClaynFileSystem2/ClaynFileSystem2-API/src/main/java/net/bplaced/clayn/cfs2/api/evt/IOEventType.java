@@ -24,6 +24,7 @@
 package net.bplaced.clayn.cfs2.api.evt;
 
 /**
+ * Basic types for the IO events that can occur while using the filesystem.
  *
  * @author Clayn <clayn_osmato@gmx.de>
  * @since 0.1

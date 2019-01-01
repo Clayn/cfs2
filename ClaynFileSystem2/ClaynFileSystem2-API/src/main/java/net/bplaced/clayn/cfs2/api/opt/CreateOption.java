@@ -24,11 +24,28 @@
 package net.bplaced.clayn.cfs2.api.opt;
 
 /**
+ * Some opetions for creating files and directories to specifiy what should
+ * happen in some cases.
  *
  * @author Clayn <clayn_osmato@gmx.de>
  * @since 0.2.0
  */
 public enum CreateOption
 {
-    FAIL_IF_EXIST, CREATE_PARENTS, REPLACE_IF_EXIST, SKIP_IF_EXIST;
+    /**
+     * Fails and throws an exception if the directory or file already exists
+     */
+    FAIL_IF_EXIST,
+    /**
+     * Also creates the parent directories if they don't exist
+     */
+    CREATE_PARENTS,
+    /**
+     * Replaces the directory or file if it already exists.
+     */
+    REPLACE_IF_EXIST,
+    /**
+     * Skips the creation if the directory of file already exists.
+     */
+    SKIP_IF_EXIST;
 }

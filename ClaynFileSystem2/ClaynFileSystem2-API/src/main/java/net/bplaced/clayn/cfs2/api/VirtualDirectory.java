@@ -25,10 +25,8 @@ package net.bplaced.clayn.cfs2.api;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import net.bplaced.clayn.cfs2.api.evt.IOEvent;
 import net.bplaced.clayn.cfs2.api.opt.CreateOption;
 import net.bplaced.clayn.cfs2.api.util.Copyable;
 
@@ -79,7 +77,7 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity, Cop
      * Returns a list of all directories in this directory. May be empty but
      * never {@code null}.
      *
-     * @return the non null list of the directories in this directory.
+     * @return a non null list of the directories in this directory.
      */
     public List<VirtualDirectory> listDirectories();
 
@@ -87,7 +85,7 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity, Cop
      * Returns a list of all files in this directory. May be empty but never
      * {@code null}.
      *
-     * @return the non null list of the files in this directory.
+     * @return a non null list of the files in this directory.
      */
     public List<VirtualFile> listFiles();
 
@@ -96,7 +94,7 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity, Cop
      * list will only contain the names but not if it is a file or directory.
      * May be empty but never {@code null}.
      *
-     * @return the non null list with the name of all files and directories in
+     * @return a non null list with the name of all files and directories in
      * this directory.
      */
     public default List<String> listContent()
@@ -153,29 +151,16 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity, Cop
         }
     }
 
-    public default void setOnFileCreated(Consumer<IOEvent<VirtualFile>> handler)
-    {
-
-    }
-
-    public default void setOnFileModified(Consumer<IOEvent<VirtualFile>> handler)
-    {
-
-    }
-
-    public default void setOnFileDeleted(Consumer<IOEvent<VirtualFile>> handler)
-    {
-
-    }
+    public VirtualWatchService enableWatchService() throws IOException;
 
     /**
-     * Sets all listeners to {@code null}. Any implementation that needs another
-     * behaviour must override this method.
+     * Disables the watchservice for this directory. If it was not enabled this
+     * method does nothing. When disabeling the watchservice no further changes
+     * will be send to the listeners. However pending changes may be processed
+     * (no guarantee though).
+     *
+     * @throws IOException if an I/O exception occurs
      */
-    public default void removeListeners()
-    {
-        setOnFileCreated(null);
-        setOnFileDeleted(null);
-        setOnFileModified(null);
-    }
+    public void disableWatchService() throws IOException;
+
 }

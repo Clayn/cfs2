@@ -24,6 +24,7 @@
 package net.bplaced.clayn.cfs2.api;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 import net.bplaced.clayn.cfs2.api.util.Copyable;
 import net.bplaced.clayn.cfs2.api.util.FileSystemProvider;
@@ -53,11 +54,11 @@ public interface VirtualFileSystem extends Copyable<VirtualFileSystem>
      * Returns a map with all required parameters for using the
      * {@link FileSystemProvider file system provider}.
      *
-     * @return
+     * @return a non {@code null} map with all parameters for this filesystem
      */
     public default Map<String, Class<?>> getProviderInformation()
     {
-        return null;
+        return Collections.emptyMap();
     }
 
 }
