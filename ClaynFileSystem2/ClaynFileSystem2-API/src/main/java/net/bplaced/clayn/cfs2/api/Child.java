@@ -26,7 +26,7 @@ package net.bplaced.clayn.cfs2.api;
 /**
  *
  * @author Clayn <clayn_osmato@gmx.de>
- * @param <Parent>
+ * @param <Parent> the type of the parent for the child.
  * @since 0.2.0
  */
 public interface Child<Parent>

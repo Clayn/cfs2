@@ -26,14 +26,14 @@ package net.bplaced.clayn.cfs2.api.util;
 import java.io.IOException;
 
 /**
- * Interface for all classes that can be copied to a specific location.
+ * Interface for all classes that can be copied to a 'destination' object. In
+ * most cases the destination object will be of the same type.
  *
  * @author Clayn <clayn_osmato@gmx.de>
- * @param <T> the type of the location the implementing class can be copied to
+ * @param <T> the type for the destination
  * @since 0.2.0
  */
 public interface Copyable<T>
 {
-
     public void copy(T dest) throws IOException;
 }

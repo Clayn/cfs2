@@ -31,6 +31,9 @@ import net.bplaced.clayn.cfs2.api.opt.CreateOption;
 import net.bplaced.clayn.cfs2.api.util.Copyable;
 
 /**
+ * A VirtualDirectory provides the general functionality a directory should
+ * have. It also allows you to listen for changes to the content inside the
+ * directory. A directory only mangages it's direct content.
  *
  * @author Clayn <clayn_osmato@gmx.de>
  * @since 0.2.0
@@ -111,8 +114,22 @@ public interface VirtualDirectory extends Child<VirtualDirectory>, IOEntity, Cop
         return getParent() == null;
     }
 
+    /**
+     * Returns the file with the given name inside this directory. If the path
+     * contains any {@code .} or {@code ..} the path will be traversed
+     * accordingly.
+     *
+     * @param name the name for the file
+     * @return the file with the given name/path from within this directory.
+     */
     public VirtualFile getFile(String name);
 
+    /**
+     * Returns the path for this directory. The path for the root directory is
+     * {@code /}
+     *
+     * @return the path for this directory.
+     */
     @Override
     public default String getPath()
     {
