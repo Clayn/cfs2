@@ -7,6 +7,10 @@ import java.nio.file.StandardWatchEventKinds;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+import net.bplaced.clayn.cfs2.api.VirtualDirectory;
 import net.bplaced.clayn.cfs2.api.VirtualFile;
 import net.bplaced.clayn.cfs2.api.VirtualWatchService;
 import org.slf4j.Logger;
@@ -26,6 +30,7 @@ public class SimpleWatchService extends VirtualWatchService
     private static final int DELETE = 1;
     private static final int MODIFIE = 2;
 
+    private final Set<String> cachedDirectories = new HashSet<>();
     private boolean active = false;
     private Thread watchThread;
     private final LocalDirectory watchedDirectory;
@@ -33,6 +38,9 @@ public class SimpleWatchService extends VirtualWatchService
     SimpleWatchService(LocalDirectory watchedDirectory)
     {
         this.watchedDirectory = watchedDirectory;
+        this.cachedDirectories.addAll(
+                watchedDirectory.listDirectories().stream().map(
+                        VirtualDirectory::getName).collect(Collectors.toList()));
     }
 
     @Override
@@ -41,10 +49,71 @@ public class SimpleWatchService extends VirtualWatchService
         return active;
     }
 
-    private VirtualFile translate(Path p)
+    private VirtualFile translateFile(Path p)
     {
         String name = p.getFileName().toString();
         return watchedDirectory.getFile(name);
+    }
+
+    private VirtualDirectory translateDirectory(Path p)
+    {
+        String name = p.getFileName().toString();
+        return watchedDirectory.changeDirectory(name);
+    }
+
+    private boolean isDirectory(Path p, int type)
+    {
+        String name = p.getFileName().toString();
+        boolean dir = false;
+        if (type != DELETE)
+        {
+            dir = watchedDirectory.listDirectories().stream().map(
+                    VirtualDirectory::getName)
+                    .anyMatch(name::equals);
+            if (type == CREATE && dir)
+            {
+                cachedDirectories.add(name);
+            }
+        } else
+        {
+            dir = cachedDirectories.contains(name);
+            cachedDirectories.remove(name);
+        }
+        return dir;
+    }
+
+    private void process(Path p, int type)
+    {
+        if (isDirectory(p, type))
+        {
+            processDirectory(p, type);
+        } else
+        {
+            processFile(p, type);
+        }
+    }
+
+    private void processDirectory(Path p, int type)
+    {
+        switch (type)
+        {
+            case CREATE:
+                directoryListeners.forEach((lis) -> lis.onDirectoryCreated(
+                        watchedDirectory,
+                        translateDirectory(p)));
+                break;
+            case DELETE:
+                directoryListeners.forEach((lis) -> lis.onDirectoryDeleted(
+                        watchedDirectory,
+                        translateDirectory(p)));
+                break;
+            case MODIFIE:
+                directoryListeners.forEach((lis) -> lis.onDirectoryModified(
+                        watchedDirectory,
+                        translateDirectory(p)));
+                break;
+            default:
+        }
     }
 
     private void processFile(Path p, int type)
@@ -52,16 +121,19 @@ public class SimpleWatchService extends VirtualWatchService
         switch (type)
         {
             case CREATE:
-                fileListeners.forEach((lis) -> lis.onFileCreated(watchedDirectory,
-                        translate(p)));
+                fileListeners.forEach((lis) -> lis.onFileCreated(
+                        watchedDirectory,
+                        translateFile(p)));
                 break;
             case DELETE:
-                fileListeners.forEach((lis) -> lis.onFileDeleted(watchedDirectory,
-                        translate(p)));
+                fileListeners.forEach((lis) -> lis.onFileDeleted(
+                        watchedDirectory,
+                        translateFile(p)));
                 break;
             case MODIFIE:
-                fileListeners.forEach((lis) -> lis.onFileModified(watchedDirectory,
-                        translate(p)));
+                fileListeners.forEach((lis) -> lis.onFileModified(
+                        watchedDirectory,
+                        translateFile(p)));
                 break;
             default:
         }
@@ -123,7 +195,7 @@ public class SimpleWatchService extends VirtualWatchService
                             {
                                 type = MODIFIE;
                             }
-                            processFile(fileName, type);
+                            process(fileName, type);
                         }
                         boolean valid = key.reset();
                         if (!valid)

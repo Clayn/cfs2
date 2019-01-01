@@ -3,6 +3,7 @@ package net.bplaced.clayn.cfs2.man.samples;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import net.bplaced.clayn.cfs2.api.DirectoryChangeListener;
 import net.bplaced.clayn.cfs2.api.FileChangeListener;
 import net.bplaced.clayn.cfs2.api.VirtualDirectory;
 import net.bplaced.clayn.cfs2.api.VirtualFile;
@@ -48,6 +49,29 @@ public class WatchServiceSample extends CFSSample
             public void onFileModified(VirtualDirectory parent, VirtualFile file)
             {
                 log.info("Modified file: {}", file.getPath());
+            }
+        });
+        ws.addDirectoryChangeListener(new DirectoryChangeListener()
+        {
+            @Override
+            public void onDirectoryCreated(VirtualDirectory parent,
+                    VirtualDirectory directory)
+            {
+                log.info("Created directory: {}", directory.getPath());
+            }
+
+            @Override
+            public void onDirectoryDeleted(VirtualDirectory parent,
+                    VirtualDirectory directory)
+            {
+                log.info("Deleted directory: {}", directory.getPath());
+            }
+
+            @Override
+            public void onDirectoryModified(VirtualDirectory parent,
+                    VirtualDirectory directory)
+            {
+                log.info("Modified directory: {}", directory.getPath());
             }
         });
         log.info("Waiting for user input to exit the sample application");
