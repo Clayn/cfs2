@@ -12,16 +12,29 @@ import java.util.Objects;
 public abstract class VirtualWatchService
 {
 
-    protected final List<DirectoryChangeListener> listeners = new ArrayList<>();
+    protected final List<FileChangeListener> fileListeners = new ArrayList<>();
+    protected final List<DirectoryChangeListener> directoryListeners = new ArrayList<>();
 
-    public final void addListener(DirectoryChangeListener listener)
+    public final void addFileChangeListener(FileChangeListener listener)
     {
-        listeners.add(Objects.requireNonNull(listener));
+        fileListeners.add(Objects.requireNonNull(listener));
     }
 
-    public final void removeListener(DirectoryChangeListener listener)
+    public final void removeFileChangeListener(FileChangeListener listener)
     {
-        listeners.remove(Objects.requireNonNull(listener));
+        fileListeners.remove(Objects.requireNonNull(listener));
+    }
+
+    public final void addDirectoryChangeListener(
+            DirectoryChangeListener listener)
+    {
+        directoryListeners.add(Objects.requireNonNull(listener));
+    }
+
+    public final void removeDirectoryChangeListener(
+            DirectoryChangeListener listener)
+    {
+        directoryListeners.remove(Objects.requireNonNull(listener));
     }
 
     public abstract boolean isActive();

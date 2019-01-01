@@ -4,17 +4,20 @@ public class DirectoryChangeAdapter implements DirectoryChangeListener
 {
 
     @Override
-    public void onFileCreated(VirtualDirectory parent, VirtualFile file)
+    public void onDirectoryCreated(VirtualDirectory parent,
+            VirtualDirectory directory)
     {
     }
 
     @Override
-    public void onFileDeleted(VirtualDirectory parent, VirtualFile file)
+    public void onDirectoryDeleted(VirtualDirectory parent,
+            VirtualDirectory directory)
     {
     }
 
     @Override
-    public void onFileModified(VirtualDirectory parent, VirtualFile file)
+    public void onDirectoryModified(VirtualDirectory parent,
+            VirtualDirectory directory)
     {
     }
 

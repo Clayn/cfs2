@@ -52,15 +52,15 @@ public class SimpleWatchService extends VirtualWatchService
         switch (type)
         {
             case CREATE:
-                listeners.forEach((lis) -> lis.onFileCreated(watchedDirectory,
+                fileListeners.forEach((lis) -> lis.onFileCreated(watchedDirectory,
                         translate(p)));
                 break;
             case DELETE:
-                listeners.forEach((lis) -> lis.onFileDeleted(watchedDirectory,
+                fileListeners.forEach((lis) -> lis.onFileDeleted(watchedDirectory,
                         translate(p)));
                 break;
             case MODIFIE:
-                listeners.forEach((lis) -> lis.onFileModified(watchedDirectory,
+                fileListeners.forEach((lis) -> lis.onFileModified(watchedDirectory,
                         translate(p)));
                 break;
             default:

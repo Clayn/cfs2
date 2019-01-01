@@ -8,9 +8,12 @@ package net.bplaced.clayn.cfs2.api;
 public interface DirectoryChangeListener
 {
 
-    public void onFileCreated(VirtualDirectory parent, VirtualFile file);
+    public void onDirectoryCreated(VirtualDirectory parent,
+            VirtualDirectory directory);
 
-    public void onFileDeleted(VirtualDirectory parent, VirtualFile file);
+    public void onDirectoryDeleted(VirtualDirectory parent,
+            VirtualDirectory directory);
 
-    public void onFileModified(VirtualDirectory parent, VirtualFile file);
+    public void onDirectoryModified(VirtualDirectory parent,
+            VirtualDirectory directory);
 }

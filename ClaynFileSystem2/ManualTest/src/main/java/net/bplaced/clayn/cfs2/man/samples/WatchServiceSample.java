@@ -3,7 +3,7 @@ package net.bplaced.clayn.cfs2.man.samples;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import net.bplaced.clayn.cfs2.api.DirectoryChangeListener;
+import net.bplaced.clayn.cfs2.api.FileChangeListener;
 import net.bplaced.clayn.cfs2.api.VirtualDirectory;
 import net.bplaced.clayn.cfs2.api.VirtualFile;
 import net.bplaced.clayn.cfs2.api.VirtualFileSystem;
@@ -30,7 +30,7 @@ public class WatchServiceSample extends CFSSample
         log.info("Filesystem created");
         log.info("Root is located at: {}", f);
         VirtualWatchService ws = root.enableWatchService();
-        ws.addListener(new DirectoryChangeListener()
+        ws.addFileChangeListener(new FileChangeListener()
         {
             @Override
             public void onFileCreated(VirtualDirectory parent, VirtualFile file)
