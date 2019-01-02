@@ -241,7 +241,7 @@ public class LocalDirectory implements VirtualDirectory
     @Override
     public String getName()
     {
-        return localFile.getName();
+        return isRoot() ? "/" : localFile.getName();
     }
 
     @Override
