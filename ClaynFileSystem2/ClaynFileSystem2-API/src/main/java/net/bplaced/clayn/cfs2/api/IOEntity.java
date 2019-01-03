@@ -27,6 +27,8 @@ import java.io.IOException;
 import net.bplaced.clayn.cfs2.api.opt.CreateOption;
 
 /**
+ * An IOEntity is an object that describes an perstistable object. It provides
+ * the functionality to check where it is located and create it if neccessary.
  *
  * @author Clayn <clayn_osmato@gmx.de>
  * @since 0.2.0
