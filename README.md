@@ -16,10 +16,12 @@ This repository contains several Maven porjects which each one having a specific
 - **cfs2** 
 	- Parent Maven project that contains the different modules and provides several common dependencies such as the logging framework (SLF4J)
 - **cfs2-api**
-	- Filesystem API which is recommended to use by applications. Contains also some utility tools build on top of the filesystem classes 
+	- Filesystem API which is recommended to use by applications. Contains also some utility tools build on top of the filesystem classes
+- **cfs2-test**
+	- Common test cases that test the API conformity of  
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTg4Mjg0OTg2MCwyMTE1OTg3OTIwLDE4OD
-MzNzk2MjldfQ==
+eyJoaXN0b3J5IjpbODMxNzQ5ODc4LDIxMTU5ODc5MjAsMTg4Mz
+M3OTYyOV19
 -->
