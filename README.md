@@ -6,7 +6,11 @@ It provides an API to virtual directories and files. While e.g. the Java IO and 
 
 ## Features
 
+ - Different classes for directories and files
+ - Changable implementation for different use cases
+ - Easy directory watching for file events
+ - Access restriction (Can't leave the root directory)
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbMzEyMDAzOTA1LDE4ODMzNzk2MjldfQ==
+eyJoaXN0b3J5IjpbMjExNTk4NzkyMCwxODgzMzc5NjI5XX0=
 -->
