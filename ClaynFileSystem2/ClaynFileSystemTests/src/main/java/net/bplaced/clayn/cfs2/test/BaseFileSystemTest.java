@@ -26,7 +26,9 @@ package net.bplaced.clayn.cfs2.test;
 import net.bplaced.clayn.cfs2.api.VirtualFileSystem;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 /**
  *
@@ -38,6 +40,9 @@ public abstract class BaseFileSystemTest
 
     protected VirtualFileSystem fileSystem;
     protected FileSystemTestConfigurator configurator;
+
+    @Rule
+    public TestName testName = new TestName();
 
     @Before
     public final void internalBefore() throws Exception
