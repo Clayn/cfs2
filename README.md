@@ -18,10 +18,12 @@ This repository contains several Maven porjects which each one having a specific
 - **cfs2-api**
 	- Filesystem API which is recommended to use by applications. Contains also some utility tools build on top of the filesystem classes
 - **cfs2-test**
-	- Common test cases that test the API conformity of  
+	- Common test cases that test the API conformity of implementations. This project can be added as test dependency to just extend the abstract test classes (which need a provider for a filesystem to test) and than test your implementation. 
+- **cfs2-impl** 
+	- A basic implementation that uses the Java IO/NIO classes to provide a
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbODMxNzQ5ODc4LDIxMTU5ODc5MjAsMTg4Mz
-M3OTYyOV19
+eyJoaXN0b3J5IjpbLTE2MDg2MDIyMSwyMTE1OTg3OTIwLDE4OD
+MzNzk2MjldfQ==
 -->
