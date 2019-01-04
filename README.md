@@ -15,10 +15,11 @@ This repository contains several Maven porjects which each one having a specific
 
 - **cfs2** 
 	- Parent Maven project that contains the different modules and provides several common dependencies such as the logging framework (SLF4J)
-- **cfs2-api** 
+- **cfs2-api**
+	-  
 
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1NTQ1Nzk0MDYsMjExNTk4NzkyMCwxOD
-gzMzc5NjI5XX0=
+eyJoaXN0b3J5IjpbNTUyODIzNDcxLDIxMTU5ODc5MjAsMTg4Mz
+M3OTYyOV19
 -->
