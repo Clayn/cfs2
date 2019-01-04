@@ -23,3 +23,8 @@ This repository contains several Maven porjects which each one having a specific
 	- A basic implementation that uses the Java IO/NIO classes to provide a virtual filesystem that uses the OS filesystem
 - **cfs2-sample**
 	- Contains samples for the usage of the virtual filesystem. Can be used to test different features of the project
+
+
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTE3OTg5ODQ0NTJdfQ==
+-->
