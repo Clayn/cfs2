@@ -13,9 +13,10 @@ It provides an API to virtual directories and files. While e.g. the Java IO and 
 # Content
 This repository contains several Maven porjects which each one having a specific purpose
 
-## Heading
+- **cfs2** Parent Maven project that contains the different modules and provides several common dependencies such as the logging framework (SLF4J)
+
 
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTQ3MDA1Njk5NywyMTE1OTg3OTIwLDE4OD
-MzNzk2MjldfQ==
+eyJoaXN0b3J5IjpbMTQyMTQxNjE3LDIxMTU5ODc5MjAsMTg4Mz
+M3OTYyOV19
 -->
