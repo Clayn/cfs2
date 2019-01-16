@@ -17,12 +17,12 @@ This repository contains several Maven porjects which each one having a specific
 	- Parent Maven project that contains the different modules and provides several common dependencies such as the logging framework (SLF4J)
 - **[cfs2-api](https://github.com/Clayn/cfs2/tree/master/ClaynFileSystem2/ClaynFileSystem2-API)**
 	- Filesystem API which is recommended to use by applications. Contains also some utility tools build on top of the filesystem classes
-- **cfs2-test**
+- **[cfs2-test](https://github.com/Clayn/cfs2/tree/master/ClaynFileSystem2/ClaynFileSystemTests)**
 	- Common test cases that test the API conformity of implementations. This project can be added as test dependency to just extend the abstract test classes (which need a provider for a filesystem to test) and than test your implementation. 
 - **cfs2-impl** 
 	- A basic implementation that uses the Java IO/NIO classes to provide a virtual filesystem that uses the OS filesystem
 - **cfs2-sample**
 	- Contains samples for the usage of the virtual filesystem. Can be used to test different features of the project
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbLTE1MTc1MzUyNTBdfQ==
+eyJoaXN0b3J5IjpbNzU0ODQwNDA4LC0xNTE3NTM1MjUwXX0=
 -->
