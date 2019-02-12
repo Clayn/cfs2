@@ -6,7 +6,7 @@ It provides an API to virtual directories and files. While e.g. the Java IO and 
 
 # Features
  - Different classes for directories and files
- - Changable implementation for different use cases
+ - Changeable implementation for different use cases
  - Easy directory watching for file events
  - Access restriction (Can't leave the root directory)
 
@@ -19,10 +19,11 @@ This repository contains several Maven porjects which each one having a specific
 	- Filesystem API which is recommended to use by applications. Contains also some utility tools build on top of the filesystem classes
 - **[cfs2-test](https://github.com/Clayn/cfs2/tree/master/ClaynFileSystem2/ClaynFileSystemTests)**
 	- Common test cases that test the API conformity of implementations. This project can be added as test dependency to just extend the abstract test classes (which need a provider for a filesystem to test) and than test your implementation. 
-- **cfs2-impl** 
+- **[cfs2-impl](https://github.com/Clayn/cfs2/tree/master/ClaynFileSystem2/Local-Impl)** 
 	- A basic implementation that uses the Java IO/NIO classes to provide a virtual filesystem that uses the OS filesystem
-- **cfs2-sample**
+- **[cfs2-sample](https://github.com/Clayn/cfs2/tree/master/ClaynFileSystem2/ManualTest)** 
 	- Contains samples for the usage of the virtual filesystem. Can be used to test different features of the project
 <!--stackedit_data:
-eyJoaXN0b3J5IjpbNzU0ODQwNDA4LC0xNTE3NTM1MjUwXX0=
+eyJoaXN0b3J5IjpbMTQ3MjA4NjU4Nyw3NTQ4NDA0MDgsLTE1MT
+c1MzUyNTBdfQ==
 -->
