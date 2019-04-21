@@ -8,12 +8,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <repositories>
-        <repository>
-            <id>clayn</id>
-            <url>http://192.168.1.63:8081/maven-clayn/</url>
-        </repository>
-    </repositories>
     <name>Clayn Filesystem 2</name>    
     
     <modules>
@@ -58,11 +52,4 @@
             <version>1.7.20</version>
         </dependency>
     </dependencies>
-    <distributionManagement>
-        <repository>
-            <id>asus-nexus</id>
-            <name>Clayns Internal Nexus Repository</name>
-            <url>http://192.168.1.63:8081/repository/maven-clayn/</url>
-        </repository>
-    </distributionManagement>
 </project>
